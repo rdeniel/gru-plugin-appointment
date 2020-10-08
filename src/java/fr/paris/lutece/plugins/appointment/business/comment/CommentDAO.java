@@ -77,7 +77,7 @@ public final class CommentDAO implements ICommentDAO
 			daoUtil.setString( nIndex++ , comment.getComment( ) );
 			daoUtil.setString( nIndex++ , comment.getComment( ) );
 			daoUtil.setDate( nIndex++ , comment.getCreationDate( ) );
-			daoUtil.setInt( nIndex++ , comment.getUserAdminUserCreate( ).getUserId( ) );
+			daoUtil.setString( nIndex++ , comment.getCreatorUserName( ) );
 
 			daoUtil.executeUpdate( );
 			if ( daoUtil.nextGeneratedKey( ) ) 
@@ -111,7 +111,7 @@ public final class CommentDAO implements ICommentDAO
 				comment.setEndingValidityDate( daoUtil.getDate( nIndex++ ) );            
 				comment.setComment( daoUtil.getString( nIndex ) );
 				comment.setCreationDate( daoUtil.getDate( nIndex++ ) );            
-				comment.setUserAdminUserCreate( new AdminUserDAO().load(  daoUtil.getInt( nIndex )  ) );  
+				comment.setCreatorUserName( daoUtil.getString( nIndex ) );  
 
 			}
 
@@ -151,7 +151,7 @@ public final class CommentDAO implements ICommentDAO
 			daoUtil.setString( nIndex++ , comment.getComment( ) );
 			daoUtil.setInt( nIndex , comment.getId( ) );
 			daoUtil.setDate( nIndex++ , comment.getCreationDate( ) );
-			daoUtil.setInt( nIndex++ , comment.getUserAdminUserCreate( ).getUserId( ) );
+			daoUtil.setString( nIndex++ , comment.getCreatorUserName( ) );
 
 			daoUtil.executeUpdate( );
 			daoUtil.free( );
@@ -180,7 +180,7 @@ public final class CommentDAO implements ICommentDAO
 				comment.setEndingValidityDate( daoUtil.getDate( nIndex++ ) );
 				comment.setComment( daoUtil.getString( nIndex ) );
 				comment.setCreationDate( daoUtil.getDate( nIndex++ ) );            
-				comment.setUserAdminUserCreate( new AdminUserDAO().load(  daoUtil.getInt( nIndex )  ) ); 
+				comment.setCreatorUserName( daoUtil.getString( nIndex ) ); 
 
 				commentList.add( comment );
 			}
@@ -217,7 +217,7 @@ public final class CommentDAO implements ICommentDAO
 				comment.setEndingValidityDate( daoUtil.getDate( nIndex++ ) );
 				comment.setComment( daoUtil.getString( nIndex ) );  
 				comment.setCreationDate( daoUtil.getDate( nIndex++ ) );            
-				comment.setUserAdminUserCreate( new AdminUserDAO().load(  daoUtil.getInt( nIndex )  ) ); 
+				comment.setCreatorUserName( daoUtil.getString( nIndex ) ); 
 
 				commentList.add( comment );
 			}
@@ -298,7 +298,7 @@ public final class CommentDAO implements ICommentDAO
 				comment.setEndingValidityDate( daoUtil.getDate( nIndex++ ) );
 				comment.setComment( daoUtil.getString( nIndex ) );  
 				comment.setCreationDate( daoUtil.getDate( nIndex++ ) );            
-				comment.setUserAdminUserCreate( creatorUser ); 
+				comment.setCreatorUserName( daoUtil.getString( nIndex ) ); 
 
 				commentList.add( comment );
 			}

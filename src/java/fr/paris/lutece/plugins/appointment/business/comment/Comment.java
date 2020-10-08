@@ -65,7 +65,7 @@ public class Comment implements Serializable
     /**
      * The Admin User who created the comment (if not created by the user himself)
      */
-    private AdminUser _userAdminUserCreate;
+    private String _strCreatorUserName;
 
     /**
      * Returns the Id
@@ -175,21 +175,21 @@ public class Comment implements Serializable
     }
     
     /**
-     * Returns the AdminUserCreate
-     * @return The AdminUserCreate
+     * Returns the CreatorUserName
+     * @return The _strCreatorUserName
      */
-    public AdminUser getUserAdminUserCreate( )
+    public String getCreatorUserName( )
     {
-    	return _userAdminUserCreate;
+    	return _strCreatorUserName;
     }
     
     /**
-     * Sets the AdminUserCreate
-     * @param userAdminUserCreate The AdminUserCreate
+     * Sets the strCreatorUserName
+     * @param creatorUserName The creatorUserName
      */ 
-    public void setUserAdminUserCreate( AdminUser userAdminUserCreate ) 
+    public void setCreatorUserName( String creatorUserName ) 
     {
-    	_userAdminUserCreate = userAdminUserCreate;
+    	_strCreatorUserName = creatorUserName;
     }
 
 }
