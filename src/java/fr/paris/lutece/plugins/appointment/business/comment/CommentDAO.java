@@ -274,7 +274,7 @@ public final class CommentDAO implements ICommentDAO
 	 */
 	@Override
 	public List<Comment> selectCommentsList(Plugin plugin, Date startingDate, Date endingDate, int nIdForm,
-			Date creationDate, AdminUser creatorUser) {
+			Date creationDate, String creatorUser) {
 		List<Comment> commentList = new ArrayList<>(  );
 		try( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BETWEEN, plugin ) )
 		{
@@ -282,7 +282,7 @@ public final class CommentDAO implements ICommentDAO
 			daoUtil.setDate(2, endingDate);
 			daoUtil.setInt(3, nIdForm);
 			daoUtil.setDate(4, creationDate);
-			daoUtil.setInt(5, creatorUser.getUserId( ) );
+			daoUtil.setString(5, creatorUser );
 
 
 			daoUtil.executeQuery(  );

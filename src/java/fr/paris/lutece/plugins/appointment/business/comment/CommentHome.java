@@ -132,7 +132,7 @@ public final class CommentHome
      * @param creatorUser the user who created the comment
      * @returnThe instance of the comment
      */
-    public static List<Comment> selectCommentsList(  Date startingDate, Date endingDate, int nIdForm, Date creationDate, AdminUser creatorUser ){
+    public static List<Comment> selectCommentsList(  Date startingDate, Date endingDate, int nIdForm, Date creationDate, String creatorUser ){
     	
     	return  _dao.selectCommentsList( _plugin, startingDate, endingDate, nIdForm, creationDate, creatorUser );
     }

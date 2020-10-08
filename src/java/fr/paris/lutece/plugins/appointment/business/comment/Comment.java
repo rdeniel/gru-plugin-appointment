@@ -36,8 +36,6 @@ package fr.paris.lutece.plugins.appointment.business.comment;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import fr.paris.lutece.portal.business.user.AdminUser;
-
 import java.io.Serializable;
 import java.sql.Date;
 import javax.validation.constraints.NotNull;
