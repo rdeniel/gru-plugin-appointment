@@ -796,7 +796,7 @@ public class AppointmentSlotJspBean extends AbstractAppointmentFormAndSlotJspBea
 		int nIdForm= Integer.parseInt( request.getParameter(PARAMETER_ID_FORM) );
 		_comment = ( _comment != null ) ? _comment : new Comment(  );
 		_comment.setIdForm(nIdForm);
-		_comment.setCreationDate( (java.sql.Date) new Date( ) );
+		_comment.setCreationDate( new Date( ) );
 		_comment.setCreatorUserName( user.getFirstName( ) + user.getLastName( ) );
 
 		Map<String, Object> model = getModel( );

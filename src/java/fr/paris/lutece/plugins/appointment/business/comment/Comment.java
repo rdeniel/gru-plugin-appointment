@@ -37,7 +37,8 @@ package fr.paris.lutece.plugins.appointment.business.comment;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+
 import javax.validation.constraints.NotNull;
 
 /**
