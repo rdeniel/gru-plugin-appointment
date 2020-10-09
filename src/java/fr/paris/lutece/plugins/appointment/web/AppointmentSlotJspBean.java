@@ -599,7 +599,7 @@ public class AppointmentSlotJspBean extends AbstractAppointmentFormAndSlotJspBea
 		}
 		// Get all the week definitions
 		HashMap<LocalDate, WeekDefinition> mapWeekDefinition = WeekDefinitionService.findAllWeekDefinition( nIdForm );
-		List<WeekDefinition> listWeekDefinition = new ArrayList<WeekDefinition>( mapWeekDefinition.values( ) );
+		List<WeekDefinition> listWeekDefinition = new ArrayList<>( mapWeekDefinition.values( ) );
 		// Get the min time of all the week definitions
 		LocalTime minStartingTime = WeekDefinitionService.getMinStartingTimeOfAListOfWeekDefinition( listWeekDefinition );
 		// Get the max time of all the week definitions
@@ -797,7 +797,7 @@ public class AppointmentSlotJspBean extends AbstractAppointmentFormAndSlotJspBea
 		_comment = ( _comment != null ) ? _comment : new Comment(  );
 		_comment.setIdForm(nIdForm);
 		_comment.setCreationDate( new Date( ) );
-		_comment.setCreatorUserName( user.getFirstName( ) + user.getLastName( ) );
+		_comment.setCreatorUserName( user.getAccessCode( ) );
 
 		Map<String, Object> model = getModel( );
 		model.put( MARK_COMMENT, _comment );

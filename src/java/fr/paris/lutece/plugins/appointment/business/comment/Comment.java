@@ -62,9 +62,9 @@ public class Comment implements Serializable
     private Date _dateCreationDate;
     
     /**
-     * The Admin User who created the comment (if not created by the user himself)
+     * The User who created the comment (if not created by the user himself)
      */
-    private String _strCreatorUserName;
+    private String _strCreatorUserConnectId;
 
     /**
      * Returns the Id
@@ -173,22 +173,21 @@ public class Comment implements Serializable
     	_dateCreationDate = dateCreationDate;
     }
     
-    /**
-     * Returns the CreatorUserName
-     * @return The _strCreatorUserName
+    /**UserConnectId
+     * @return The _strCreatorUserConnectId
      */
     public String getCreatorUserName( )
     {
-    	return _strCreatorUserName;
+    	return _strCreatorUserConnectId;
     }
     
     /**
-     * Sets the strCreatorUserName
-     * @param creatorUserName The creatorUserName
+     * Sets the strCreatorUserConnectId
+     * @param creatorUserConnectId The creatorUserConnectId
      */ 
-    public void setCreatorUserName( String creatorUserName ) 
+    public void setCreatorUserName( String creatorUserConnectId ) 
     {
-    	_strCreatorUserName = creatorUserName;
+    	_strCreatorUserConnectId = creatorUserConnectId;
     }
 
 }
