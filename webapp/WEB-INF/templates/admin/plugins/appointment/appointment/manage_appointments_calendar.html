@@ -90,6 +90,17 @@
                 },
             </#list>
         </#if>
+        <#if comment_events??>
+        <#list comment_events as comment_event>
+	        title : '${comment_event.comment}'
+	        start : '${comment_event.startingValidityDate}',
+	        end : '${comment_event.endingValidityDate}',
+	        id : '${comment_event.id}',
+	        textColor: 'white',
+	        backgroundColor : 'orange',
+	        borderColor : 'orange',
+        </#list>
+        </#if>
     ];
     var defaultDate = '${date_of_display}';
     $(document).ready(function() {
