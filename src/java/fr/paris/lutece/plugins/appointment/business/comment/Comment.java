@@ -160,7 +160,8 @@ public class Comment implements Serializable
      * Returns the CreationDate
      * @return The CreationDate
      */
-    public Date getCreationDate( ) {
+    public Date getCreationDate( )
+    {
     	return _dateCreationDate;
     }
     

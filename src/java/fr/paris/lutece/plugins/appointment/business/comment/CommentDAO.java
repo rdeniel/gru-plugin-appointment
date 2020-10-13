@@ -57,7 +57,7 @@ public final class CommentDAO implements ICommentDAO
 	private static final String SQL_QUERY_UPDATE = "UPDATE appointment_comment SET id_comment = ?, id_form = ?, starting_validity_date = ?, ending_validity_date = ?, comment = ?, comment_creation_date = ?,  WHERE id_comment = ?";
 	private static final String SQL_QUERY_SELECTALL = "SELECT id_comment, id_form, starting_validity_date, ending_validity_date, comment, comment_creation_date, comment_user_creator FROM appointment_comment";
 	private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_comment FROM appointment_comment";
-	private static final String SQL_QUERY_SELECT_BETWEEN = "SELECT id_comment, id_form, starting_validity_date, ending_validity_date, comment, comment_creation_date, comment_user_creator FROM appointment_comment WHERE starting_validity_date <= ? and ending_validity_date >= ? and id_form = ?";
+	private static final String SQL_QUERY_SELECT_BETWEEN = "SELECT id_comment, id_form, starting_validity_date, ending_validity_date, comment, comment_creation_date, comment_user_creator FROM appointment_comment WHERE starting_validity_date >= ? and ending_validity_date <= ? and id_form = ?";
 
 
 	/**
@@ -213,9 +213,9 @@ public final class CommentDAO implements ICommentDAO
 				comment.setIdForm( daoUtil.getInt( nIndex++ ) );
 				comment.setStartingValidityDate( daoUtil.getDate( nIndex++ ) );
 				comment.setEndingValidityDate( daoUtil.getDate( nIndex++ ) );
-				comment.setComment( daoUtil.getString( nIndex ) );  
+				comment.setComment( daoUtil.getString( nIndex++ ) );  
 				comment.setCreationDate( daoUtil.getDate( nIndex++ ) );            
-				comment.setCreatorUserName( daoUtil.getString( nIndex ) ); 
+				comment.setCreatorUserName( daoUtil.getString( nIndex++ ) ); 
 
 				commentList.add( comment );
 			}
