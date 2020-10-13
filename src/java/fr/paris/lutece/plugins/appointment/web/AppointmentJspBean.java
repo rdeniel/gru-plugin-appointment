@@ -456,7 +456,7 @@ public class AppointmentJspBean extends MVCAdminJspBean
         model.put( PARAMETER_DATE_OF_DISPLAY, dateOfDisplay );
         model.put( PARAMETER_DAY_OF_WEEK, listDayOfWeek );
         model.put( PARAMETER_EVENTS, listSlot );
-        model.put( PARAMETER_EVENTS_COMMENTS, CommentHome.selectCommentsList( (Date) Date.from( startingDateOfDisplay.atStartOfDay( ZoneId.systemDefault( ) ).toInstant()), (Date) Date.from( endingDateOfDisplay.atStartOfDay( ZoneId.systemDefault( ) ).toInstant( )  ), nIdForm) );
+        model.put( PARAMETER_EVENTS_COMMENTS, CommentHome.selectCommentsList( (Date) Date.valueOf(startingDateOfDisplay ), (Date) Date.valueOf( endingDateOfDisplay ), nIdForm ) );
         model.put( PARAMETER_MIN_TIME, minStartingTime );
         model.put( PARAMETER_MAX_TIME, maxEndingTime );
         model.put( PARAMETER_MIN_DURATION, LocalTime.MIN.plusMinutes( AppointmentUtilities.THIRTY_MINUTES ) );
