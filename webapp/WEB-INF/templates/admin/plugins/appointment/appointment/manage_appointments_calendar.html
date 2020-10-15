@@ -100,7 +100,8 @@
             "title" : "${comment_event.comment}",
             "start" : "${comment_event.startingValidityDate?string['yyyy-MM-dd']}",
             "end" : "${comment_event.endingValidityDate?string['yyyy-MM-dd']}",
-            "id" : "${comment_event.id}"
+            "id" : "${comment_event.id}",
+            "type": "comment"
         },
         
         </#list>
@@ -144,7 +145,8 @@
                                       <#elseif event.isOpen & event.isPassed>"#bebebe",
                                       <#else>"#bebebe",
                                       </#if>
-                    "borderColor" : "#bebebe"
+                    "borderColor" : "#bebebe",
+                    "type" : "appointment"
                 },
             </#list>
         </#if>
@@ -260,13 +262,18 @@
             eventRender: function( event, element, view ) {
                 var $title = element.find( '.fc-title' );
                 $title.html( $title.text() );
-                $(element).popover({
-                	container: 'body',
-                    placement : 'bottom',
-                    html : true,
-                    trigger : 'hover',
-                    content : '<center>'+event.start.format('ddd DD/MM')+'</center>' + '<center><b>' + event.start.format('HH:mm') + '</b> - <b>' + event.end.format('HH:mm')+'</b></center>'
-                });
+                var json = {
+                        "container": "body",
+                        "placement" : "bottom",
+                        "html" : true,
+                        "trigger" : "hover"
+                    };
+                if( event.type == "comment" ){
+                	json.content = "<center>"+event.start.format('ddd DD/MM')+"</center>" + "<center><b>" + event.start.format('HH:mm') + "</b> - <b>" + event.end.format('HH:mm')+"</b></center></center>" + event.title + "</center>";
+                }else{
+                	json.content = "<center>"+event.start.format('ddd DD/MM')+"</center>" + "<center><b>" + event.start.format('HH:mm') + "</b> - <b>" + event.end.format('HH:mm')+"</b></center>";
+                }
+                $(element).popover( json );
                 $(element).contextmenu(function() {
                     return false;
                 });
