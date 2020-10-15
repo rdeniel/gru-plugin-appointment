@@ -876,17 +876,18 @@ public class AppointmentSlotJspBean extends AbstractAppointmentFormAndSlotJspBea
 	@Action( ACTION_DO_REMOVE_COMMENT )
 	public String doRemoveComment( HttpServletRequest request )
 	{ 
-		int nIdComment= Integer.parseInt(request.getParameter( PARAMETER_ID_COMMENT ));    	
+		int nIdComment= Integer.parseInt(request.getParameter( PARAMETER_ID_COMMENT ));
+		UrlItem url = new UrlItem( JSP_MANAGE_APPOINTMENTS );
+		url.addParameter( PARAMETER_ID_FORM, _comment.getIdForm( ) );
 		CommentHome.remove( nIdComment );
 		
-		UrlItem url = new UrlItem( JSP_MANAGE_APPOINTMENTS );
         url.addParameter( MVCUtils.PARAMETER_VIEW, VIEW_CALENDAR_MANAGE_APPOINTMENTS );
-        url.addParameter( PARAMETER_ID_FORM, nIdComment );
+        //url.addParameter( PARAMETER_ID_FORM, nIdComment );
         String strMessageUrl = AdminMessageService.getMessageUrl( request, INFO_COMMENT_REMOVED, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
 		
 		
 		addInfo( INFO_COMMENT_REMOVED, getLocale(  ) );
-		return redirectView( request, strMessageUrl );
+		return redirect( request, strMessageUrl );
 	}
 	/**
 	 * Check the ending time of a time slot
