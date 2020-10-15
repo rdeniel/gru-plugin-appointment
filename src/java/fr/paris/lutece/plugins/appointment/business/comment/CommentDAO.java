@@ -70,11 +70,10 @@ public final class CommentDAO implements ICommentDAO
 		{
 			int nIndex = 1;
 			daoUtil.setInt( nIndex++ , comment.getIdForm( ) );
-			daoUtil.setDate( nIndex++ , (Date) comment.getStartingValidityDate( ) );
-			daoUtil.setDate( nIndex++ , (Date) comment.getEndingValidityDate( ) );
+			daoUtil.setDate( nIndex++ , new Date( comment.getStartingValidityDate( ).getTime( ) ) );
+			daoUtil.setDate( nIndex++ , new Date( comment.getEndingValidityDate( ).getTime( ) ) );
 			daoUtil.setString( nIndex++ , comment.getComment( ) );
-			daoUtil.setString( nIndex++ , comment.getComment( ) );
-			daoUtil.setDate( nIndex++ , (Date) comment.getCreationDate( ) );
+			daoUtil.setDate( nIndex++ , new Date( comment.getCreationDate( ).getTime( ) ) );
 			daoUtil.setString( nIndex++ , comment.getCreatorUserName( ) );
 
 			daoUtil.executeUpdate( );
