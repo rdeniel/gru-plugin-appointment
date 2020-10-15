@@ -35,7 +35,6 @@
  
 package fr.paris.lutece.plugins.appointment.business.comment;
 
-import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.ReferenceList;
 
