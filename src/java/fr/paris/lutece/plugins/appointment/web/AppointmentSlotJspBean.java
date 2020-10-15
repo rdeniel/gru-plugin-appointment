@@ -88,6 +88,8 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
+import fr.paris.lutece.portal.util.mvc.utils.MVCUtils;
+import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.url.UrlItem;
 
 /**
@@ -103,6 +105,7 @@ public class AppointmentSlotJspBean extends AbstractAppointmentFormAndSlotJspBea
 	 * JSP of this JSP Bean
 	 */
 	public static final String JSP_MANAGE_APPOINTMENT_SLOTS = "ManageAppointmentSlots.jsp";
+	private static final String JSP_MANAGE_APPOINTMENTS = "jsp/admin/plugins/appointment/ManageAppointments.jsp";
 
 	public static final String TEMPLATE_CREATE_COMMENT= "/admin/plugins/appointment/comment/create_comment.html";
 	public static final String TEMPLATE_MANAGE_COMMENT= "/admin/plugins/appointment/comment/manage_comment.html";
@@ -154,7 +157,9 @@ public class AppointmentSlotJspBean extends AbstractAppointmentFormAndSlotJspBea
 	private static final String PARAMETER_ID_WEEK_DEFINITION = "id_week_definition";
 	private static final String PARAMETER_SHIFT_SLOT = "shift_slot";
 	private static final String PARAMETER_ID_COMMENT = "id_comment";
-
+	private static final String PARAMETER_COMMENT = "comment";
+	private static final String PARAMETER_STARTING_VALIDITY_DATE = "startingValidityDate";
+	private static final String PARAMETER_ENDING_VALIDITY_DATE = "endingValidityDate";
 
 
 	// Marks
@@ -172,6 +177,7 @@ public class AppointmentSlotJspBean extends AbstractAppointmentFormAndSlotJspBea
 	private static final String VIEW_MODIFY_SLOT = "viewModifySlot";
 	private static final String VIEW_ADD_COMMENT = "viewAddComment";
 	private static final String VIEW_MANAGE_COMMENT = "manageComment";
+	private static final String VIEW_CALENDAR_MANAGE_APPOINTMENTS = "viewCalendarManageAppointment";
 
 
 	// Actions
@@ -794,7 +800,7 @@ public class AppointmentSlotJspBean extends AbstractAppointmentFormAndSlotJspBea
 	{
 		User user = getUser( );
 		int nIdForm= Integer.parseInt( request.getParameter(PARAMETER_ID_FORM) );
-		_comment = ( _comment != null ) ? _comment : new Comment(  );
+		_comment = new Comment(  );
 		_comment.setIdForm(nIdForm);
 		_comment.setCreationDate( new Date( ) );
 		_comment.setCreatorUserName( user.getAccessCode( ) );
@@ -812,20 +818,34 @@ public class AppointmentSlotJspBean extends AbstractAppointmentFormAndSlotJspBea
 	 */
 	@Action( ACTION_DO_ADD_COMMENT )
 	public String doAddComment( HttpServletRequest request )
-	{ 
-
-		populate(_comment, request);
+	{
+		User user = getUser( );
+		int nIdForm= Integer.parseInt( request.getParameter(PARAMETER_ID_FORM) );
+		_comment = new Comment(  );
+		_comment.setIdForm( nIdForm );
+		_comment.setCreationDate( new Date( ) );
+		_comment.setCreatorUserName( user.getAccessCode( ) );
+		_comment.setComment( request.getParameter( PARAMETER_COMMENT ) );
+		_comment.setStartingValidityDate( DateUtil.formatDate( request.getParameter( PARAMETER_STARTING_VALIDITY_DATE ), getLocale( ) ) );
+		_comment.setEndingValidityDate( DateUtil.formatDate( request.getParameter( PARAMETER_ENDING_VALIDITY_DATE ), getLocale( ) ) );
+		//populate( _comment, request, getLocale( ) );
+		
+		UrlItem url = new UrlItem( JSP_MANAGE_APPOINTMENTS );
+        url.addParameter( MVCUtils.PARAMETER_VIEW, VIEW_CALENDAR_MANAGE_APPOINTMENTS );
+        url.addParameter( PARAMETER_ID_FORM, _comment.getIdForm( ) );
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, INFO_COMMENT_CREATED, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
+		
 		// Check constraints
 		if ( !validateBean( _comment, VALIDATION_ATTRIBUTES_PREFIX ) )
 		{
-			return redirect( request, VIEW_ADD_COMMENT, PARAMETER_ID_FORM, _comment.getIdForm( ));
+			return redirect( request, strMessageUrl);
 
 		}
 		CommentHome.create(_comment);
 
 		addInfo( INFO_COMMENT_CREATED, getLocale(  ) );
 
-		return redirectView( request, VIEW_MANAGE_COMMENT );
+		return redirect( request, strMessageUrl );
 
 	}
 	/**
@@ -856,11 +876,17 @@ public class AppointmentSlotJspBean extends AbstractAppointmentFormAndSlotJspBea
 	@Action( ACTION_DO_REMOVE_COMMENT )
 	public String doRemoveComment( HttpServletRequest request )
 	{ 
-		int nIdcomment= Integer.parseInt(request.getParameter(PARAMETER_ID_COMMENT));    	
-		CommentHome.remove( nIdcomment );
-
+		int nIdComment= Integer.parseInt(request.getParameter( PARAMETER_ID_COMMENT ));    	
+		CommentHome.remove( nIdComment );
+		
+		UrlItem url = new UrlItem( JSP_MANAGE_APPOINTMENTS );
+        url.addParameter( MVCUtils.PARAMETER_VIEW, VIEW_CALENDAR_MANAGE_APPOINTMENTS );
+        url.addParameter( PARAMETER_ID_FORM, nIdComment );
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, INFO_COMMENT_REMOVED, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
+		
+		
 		addInfo( INFO_COMMENT_REMOVED, getLocale(  ) );
-		return redirectView( request, VIEW_MANAGE_COMMENT );
+		return redirectView( request, strMessageUrl );
 	}
 	/**
 	 * Check the ending time of a time slot
