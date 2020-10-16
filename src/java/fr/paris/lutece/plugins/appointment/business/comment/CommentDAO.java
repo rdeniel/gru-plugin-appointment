@@ -104,9 +104,9 @@ public final class CommentDAO implements ICommentDAO
 
 				comment.setId( daoUtil.getInt( nIndex++ ) );
 				comment.setIdForm( daoUtil.getInt( nIndex++ ) );            
-				comment.setStartingValidityDate( daoUtil.getDate( nIndex++ ) );            
-				comment.setEndingValidityDate( daoUtil.getDate( nIndex++ ) );            
-				comment.setComment( daoUtil.getString( nIndex ) );
+				comment.setStartingValidityDate( daoUtil.getDate( nIndex++ )  );            
+				comment.setEndingValidityDate( daoUtil.getDate( nIndex++ )  );            
+				comment.setComment( daoUtil.getString( nIndex++ ) );
 				comment.setCreationDate( daoUtil.getDate( nIndex++ ) );            
 				comment.setCreatorUserName( daoUtil.getString( nIndex ) );  
 
@@ -143,11 +143,10 @@ public final class CommentDAO implements ICommentDAO
 
 			daoUtil.setInt( nIndex++ , comment.getId( ) );
 			daoUtil.setInt( nIndex++ , comment.getIdForm( ) );
-			daoUtil.setDate( nIndex++ , (Date) comment.getStartingValidityDate( ) );
-			daoUtil.setDate( nIndex++ , (Date) comment.getEndingValidityDate( ) );
+			daoUtil.setDate( nIndex++ , new Date( comment.getStartingValidityDate( ).getTime( ) ) );
+			daoUtil.setDate( nIndex++ , new Date( comment.getEndingValidityDate( ).getTime( ) ) );
 			daoUtil.setString( nIndex++ , comment.getComment( ) );
-			daoUtil.setInt( nIndex , comment.getId( ) );
-			daoUtil.setDate( nIndex++ , (Date) comment.getCreationDate( ) );
+			daoUtil.setDate( nIndex++ , new Date( comment.getCreationDate( ).getTime( ) ) );
 			daoUtil.setString( nIndex++ , comment.getCreatorUserName( ) );
 
 			daoUtil.executeUpdate( );
