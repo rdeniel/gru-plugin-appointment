@@ -34,8 +34,3 @@ function doCheckboxEffect(isChecked,id)
 		hide(id);
 	}
 }
-
-function viewAddComment()
-{
-    
-}
