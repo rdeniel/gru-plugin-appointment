@@ -160,9 +160,27 @@
         </@inputGroup>
     </@formGroup>
     
+    <@formGroup labelFor='startingValidityTime' labelKey='#i18n{create_comment.labelStartingValidityDate}'>
+        <@inputGroup>
+            <@input type='text' name='startingValidityTime' id=idStartingTime />
+            <@inputGroupItem type='addon'>
+            <@icon style='calendar' />
+            </@inputGroupItem>
+        </@inputGroup>
+    </@formGroup>
+    
     <@formGroup labelFor='endingValidityDate' labelKey='#i18n{create_comment.labelEndingValidityDate}'>
         <@inputGroup>
             <@input type='text' name='endingValidityDate' id=idEndingDate />
+            <@inputGroupItem type='addon'>
+            <@icon style='calendar' />
+            </@inputGroupItem>
+        </@inputGroup>
+    </@formGroup>
+    
+    <@formGroup labelFor='endingValidityTime' labelKey='#i18n{create_comment.labelStartingValidityDate}'>
+        <@inputGroup>
+            <@input type='text' name='endingValidityTime' id=idEndingTime />
             <@inputGroupItem type='addon'>
             <@icon style='calendar' />
             </@inputGroupItem>
