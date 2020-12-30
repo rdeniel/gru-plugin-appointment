@@ -44,17 +44,18 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import fr.paris.lutece.plugins.appointment.business.form.Form;
+import fr.paris.lutece.plugins.appointment.business.planning.TimeSlot;
 import fr.paris.lutece.plugins.appointment.business.planning.TimeSlotHome;
 import fr.paris.lutece.plugins.appointment.business.planning.WeekDefinition;
 import fr.paris.lutece.plugins.appointment.business.planning.WorkingDay;
 import fr.paris.lutece.plugins.appointment.business.planning.WorkingDayHome;
 import fr.paris.lutece.plugins.appointment.business.rule.ReservationRule;
 import fr.paris.lutece.plugins.appointment.business.rule.ReservationRuleHome;
-import fr.paris.lutece.plugins.appointment.service.listeners.FormListenerManager;
 import fr.paris.lutece.plugins.appointment.service.listeners.WeekDefinitionManagerListener;
 import fr.paris.lutece.plugins.appointment.web.dto.AppointmentFormDTO;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.ReferenceList;
+import fr.paris.lutece.util.sql.TransactionManager;
 
 /**
  * Service class for the reservation rule
@@ -64,6 +65,8 @@ import fr.paris.lutece.util.ReferenceList;
  */
 public final class ReservationRuleService
 {
+    private static final String CONST_COPY_OF_WEEK = "Copy ";
+
 
     /**
      * Private constructor - this class does not need to be instantiated
@@ -115,6 +118,45 @@ public final class ReservationRuleService
         return reservationRule.getIdReservationRule( );
     }
     /**
+     * Make a copy of typical week, with all its values
+     * 
+     * @param nIdReservationRule
+     *            the reservationRule Id to copy
+     * @return the id of the reservation rule created
+     */
+    
+    public static int copyReservationRule( int nIdReservationRule )
+    {       
+    	ReservationRule reservationRule= findReservationRuleById( nIdReservationRule ); 
+    	if( reservationRule != null ) {
+    		
+    		reservationRule.setName( CONST_COPY_OF_WEEK + reservationRule.getName() );
+            TransactionManager.beginTransaction( AppointmentPlugin.getPlugin( ) );
+	        try {
+	            ReservationRuleHome.create( reservationRule );	
+		        for ( WorkingDay workingDay : reservationRule.getListWorkingDay( ) )
+		        {
+		        	workingDay.setIdReservationRule( reservationRule.getIdReservationRule( ) );
+		        	WorkingDayHome.create( workingDay );
+		        	for( TimeSlot timeSlotTemp: workingDay.getListTimeSlot( )) {
+		        		
+		        		timeSlotTemp.setIdWorkingDay(workingDay.getIdWorkingDay( ));
+		        		TimeSlotHome.create( timeSlotTemp );
+		        	}
+		        }
+		        TransactionManager.commitTransaction( AppointmentPlugin.getPlugin( ) );
+		        return reservationRule.getIdReservationRule( );
+	       } catch( Exception e )
+	       {
+	            TransactionManager.rollBack( AppointmentPlugin.getPlugin( ) );
+	            AppLogService.error( "Error copy typical week" + e.getMessage( ), e );
+	            return 0;
+	       }      
+    	}
+    	
+    	return 0;
+    }
+    /**
      * Update a form with the new values of an appointmentForm DTO Advanced Parameters (with a date of application) --> new Typical Week
      * 
      * @param appointmentForm
@@ -156,7 +198,6 @@ public final class ReservationRuleService
      */
     public static void removeReservationRule( int nIdReservationRule )
     {
-        //FormListenerManager.notifyListenersFormChange( reservationRule.getIdForm( ) );
         ReservationRule rule= findReservationRuleById( nIdReservationRule );
         for( WorkingDay day: rule.getListWorkingDay( ) ) {
         	

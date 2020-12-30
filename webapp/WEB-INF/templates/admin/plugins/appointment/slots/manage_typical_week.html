@@ -18,6 +18,7 @@
                                             <span class="fas fa-square fa-fw" style="color:${item.color!};transform:translateY(2px)"></span>
                                             <@button type='submit' name='action_confirmRemoveParameter' title='#i18n{portal.util.labelDelete}' hideTitle=['all'] buttonIcon='trash text-danger' size='xs' color='link' />
                                             <@button style='card-control collapse' buttonTargetId='#appointment_search' hideTitle=['all'] buttonIcon='pencil' size='xs' color='link'  title='#i18n{portal.util.labelModify}' />
+                                        	<@button type='submit' name='action_copyTypicalWeek' title='#i18n{appointment.manageAppointmentForms.labelCopy}' hideTitle=['all'] buttonIcon='copy' size='xs' color='link' />                                        	
                                         </@tform>
                                     </#if>
 
@@ -463,6 +464,17 @@ function validateQty(event) {
     $('#ending_time').datetimepicker({
         format: 'HH:mm',
         stepping: 5
+    });
+    
+    $('#new_cap').click(function(){
+        $('#newCapacity').attr('min','0');
+        if( $('#newCapacity').val() < 0 ){
+            $('#newCapacity').val(0);
+        }
+    });
+
+    $('#var_cap').click(function(){
+        $('#newCapacity').attr('min','-99');
     });
 </script>
 <#include "/admin/util/editor/editor.html" />
