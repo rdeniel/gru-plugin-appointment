@@ -63,7 +63,7 @@ public final class WeekDefinitionTest extends LuteceTestCase
         Form form = FormTest.buildForm1( );
         FormHome.create( form );
         WeekDefinition weekDefinition = buildWeekDefinition( );
-        weekDefinition.setIdForm( form.getIdForm( ) );
+        //weekDefinition.setIdForm( form.getIdForm( ) );
         // Insert the WeekDefinition in database
         WeekDefinitionHome.create( weekDefinition );
         // Find the weekDefinition created in database
@@ -99,7 +99,7 @@ public final class WeekDefinitionTest extends LuteceTestCase
         Form form = FormTest.buildForm1( );
         FormHome.create( form );
         WeekDefinition weekDefinition = buildWeekDefinition( );
-        weekDefinition.setIdForm( form.getIdForm( ) );
+        //weekDefinition.setIdForm( form.getIdForm( ) );
         // Insert the WeekDefinition in database
         WeekDefinitionHome.create( weekDefinition );
         // Find the weekDefinition created in database
@@ -136,6 +136,6 @@ public final class WeekDefinitionTest extends LuteceTestCase
     public void checkAsserts( WeekDefinition weekDefinitionStored, WeekDefinition weekDefinition )
     {
         assertEquals( weekDefinitionStored.getDateOfApply( ), weekDefinition.getDateOfApply( ) );
-        assertEquals( weekDefinitionStored.getIdForm( ), weekDefinition.getIdForm( ) );
+        //assertEquals( weekDefinitionStored.getIdForm( ), weekDefinition.getIdForm( ) );
     }
 }

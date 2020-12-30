@@ -102,9 +102,11 @@ public class FormServiceTest extends LuteceTestCase
     {
         AppointmentFormDTO appointmentForm = new AppointmentFormDTO( );
 
+        appointmentForm.setName("appointment_form");
         appointmentForm.setTitle( TITLE_FORM );
         // appointmentForm.setIdCategory(nIdCategory);
         appointmentForm.setDescription( "Description Form" );
+        appointmentForm.setDescriptionRule( "Description Rule" );
 
         appointmentForm.setTimeStart( "09:00" );
         appointmentForm.setTimeEnd( "18:00" );
@@ -172,7 +174,7 @@ public class FormServiceTest extends LuteceTestCase
         int nIdForm = FormService.createAppointmentForm( appointmentForm );
         int nIdCopyForm = FormService.copyForm( nIdForm, "Copie" );
         List<DayOfWeek> listopenDays = WorkingDayService.getOpenDays( appointmentForm );
-        AppointmentFormDTO copyAppointmentForm = FormService.buildAppointmentForm( nIdCopyForm, 0, 0 );
+        AppointmentFormDTO copyAppointmentForm = FormService.buildAppointmentForm( nIdCopyForm, 0 );
         assertEquals( WeekDefinitionService.findListWeekDefinition( nIdForm ).size( ), WeekDefinitionService.findListWeekDefinition( nIdCopyForm ).size( ) );
         assertEquals( WorkingDayService.getOpenDays( appointmentForm ), WorkingDayService.getOpenDays( copyAppointmentForm ) );
         assertEquals( "Copie", copyAppointmentForm.getTitle( ) );
@@ -231,7 +233,7 @@ public class FormServiceTest extends LuteceTestCase
             }
             for ( WeekDefinition wd : WeekDefinitionHome.findByIdForm( nIdForm ) )
             {
-                for ( WorkingDay wda : WorkingDayHome.findByIdWeekDefinition( wd.getIdWeekDefinition( ) ) )
+                for ( WorkingDay wda : WorkingDayHome.findByIdWeekDefinitionRule( wd.getIdWeekDefinition( ) ) )
                 {
                     for ( TimeSlot ts : TimeSlotHome.findByIdWorkingDay( wda.getIdWorkingDay( ) ) )
                     {

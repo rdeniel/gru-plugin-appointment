@@ -73,11 +73,11 @@ public final class TimeSlotTest extends LuteceTestCase
         FormHome.create( form );
 
         WeekDefinition weekDefinition = WeekDefinitionTest.buildWeekDefinition( );
-        weekDefinition.setIdForm( form.getIdForm( ) );
+        //weekDefinition.setIdForm( form.getIdForm( ) );
         WeekDefinitionHome.create( weekDefinition );
 
         WorkingDay workingDay = WorkingDayTest.buildWorkingDay( );
-        workingDay.setIdWeekDefinition( weekDefinition.getIdWeekDefinition( ) );
+        //workingDay.setIdWeekDefinition( weekDefinition.getIdWeekDefinition( ) );
         WorkingDayHome.create( workingDay );
 
         // Initialize a TimeSlot
@@ -123,11 +123,11 @@ public final class TimeSlotTest extends LuteceTestCase
         FormHome.create( form );
 
         WeekDefinition weekDefinition = WeekDefinitionTest.buildWeekDefinition( );
-        weekDefinition.setIdForm( form.getIdForm( ) );
+        //weekDefinition.setIdForm( form.getIdForm( ) );
         WeekDefinitionHome.create( weekDefinition );
 
         WorkingDay workingDay = WorkingDayTest.buildWorkingDay( );
-        workingDay.setIdWeekDefinition( weekDefinition.getIdWeekDefinition( ) );
+        //workingDay.setIdWeekDefinition( weekDefinition.getIdWeekDefinition( ) );
         WorkingDayHome.create( workingDay );
 
         // Initialize a TimeSlot

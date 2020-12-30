@@ -113,12 +113,12 @@ public final class FormTest extends LuteceTestCase
 
         WeekDefinition weekDefinition1 = new WeekDefinition( );
         weekDefinition1.setDateOfApply( WeekDefinitionTest.DATE_OF_APPLY_1 );
-        weekDefinition1.setIdForm( form.getIdForm( ) );
+        //weekDefinition1.setIdForm( form.getIdForm( ) );
         WeekDefinitionHome.create( weekDefinition1 );
 
         WorkingDay workingDay1 = new WorkingDay( );
         workingDay1.setDayOfWeek( WorkingDayTest.DAY_OF_WEEK_1 );
-        workingDay1.setIdWeekDefinition( weekDefinition1.getIdWeekDefinition( ) );
+        //workingDay1.setIdWeekDefinition( weekDefinition1.getIdWeekDefinition( ) );
         WorkingDayHome.create( workingDay1 );
 
         TimeSlot timeSlot1 = new TimeSlot( );
@@ -137,7 +137,7 @@ public final class FormTest extends LuteceTestCase
 
         WorkingDay workingDay2 = new WorkingDay( );
         workingDay2.setDayOfWeek( WorkingDayTest.DAY_OF_WEEK_2 );
-        workingDay2.setIdWeekDefinition( weekDefinition1.getIdWeekDefinition( ) );
+        //workingDay2.setIdWeekDefinition( weekDefinition1.getIdWeekDefinition( ) );
         WorkingDayHome.create( workingDay2 );
 
         TimeSlot timeSlot3 = new TimeSlot( );
@@ -156,12 +156,12 @@ public final class FormTest extends LuteceTestCase
 
         WeekDefinition weekDefinition2 = new WeekDefinition( );
         weekDefinition2.setDateOfApply( WeekDefinitionTest.DATE_OF_APPLY_2 );
-        weekDefinition2.setIdForm( form.getIdForm( ) );
+        //weekDefinition2.setIdForm( form.getIdForm( ) );
         WeekDefinitionHome.create( weekDefinition2 );
 
         WorkingDay workingDay3 = new WorkingDay( );
         workingDay3.setDayOfWeek( WorkingDayTest.DAY_OF_WEEK_1 );
-        workingDay3.setIdWeekDefinition( weekDefinition2.getIdWeekDefinition( ) );
+        //workingDay3.setIdWeekDefinition( weekDefinition2.getIdWeekDefinition( ) );
         WorkingDayHome.create( workingDay3 );
 
         TimeSlot timeSlot5 = new TimeSlot( );
@@ -180,7 +180,7 @@ public final class FormTest extends LuteceTestCase
 
         WorkingDay workingDay4 = new WorkingDay( );
         workingDay4.setDayOfWeek( WorkingDayTest.DAY_OF_WEEK_2 );
-        workingDay4.setIdWeekDefinition( weekDefinition2.getIdWeekDefinition( ) );
+        //workingDay4.setIdWeekDefinition( weekDefinition2.getIdWeekDefinition( ) );
         WorkingDayHome.create( workingDay4 );
 
         TimeSlot timeSlot7 = new TimeSlot( );
@@ -197,7 +197,7 @@ public final class FormTest extends LuteceTestCase
         timeSlot8.setIdWorkingDay( workingDay4.getIdWorkingDay( ) );
         TimeSlotHome.create( timeSlot8 );
 
-        List<WeekDefinition> listWeekDefinition = FormHome.getListWeekDefinition( form.getIdForm( ) );
+        List<WeekDefinition> listWeekDefinition = WeekDefinitionHome.findByIdForm( form.getIdForm( ) );
         assertEquals( listWeekDefinition.size( ), 2 );
 
         // Clean
