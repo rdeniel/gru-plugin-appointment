@@ -79,7 +79,9 @@ public class FormServiceTest extends LuteceTestCase
      */
     public void testCreateAppointmentForm( )
     {
-
+    	//Remove all former forms with same title mistaking this test
+    	cleanFormByTitle( TITLE_FORM );
+    	
         int nIdForm = FormService.createAppointmentForm( buildAppointmentForm( ) );
 
         List<Form> listForms = FormService.findFormsByTitle( TITLE_FORM );
@@ -246,5 +248,14 @@ public class FormServiceTest extends LuteceTestCase
 
             FormService.removeForm( nIdForm );
         }
+    }
+    
+    public static void cleanFormByTitle( String strFormsTitle )
+    {
+    	List<Form> formsByTitle = FormService.findFormsByTitle( strFormsTitle );
+    	for(Form form : formsByTitle)
+    	{
+    		FormService.removeForm( form.getIdForm() );
+    	}
     }
 }
