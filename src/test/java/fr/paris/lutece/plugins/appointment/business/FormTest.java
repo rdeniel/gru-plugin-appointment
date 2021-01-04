@@ -113,6 +113,7 @@ public final class FormTest extends LuteceTestCase
 
         WeekDefinition weekDefinition1 = new WeekDefinition( );
         weekDefinition1.setDateOfApply( WeekDefinitionTest.DATE_OF_APPLY_1 );
+        weekDefinition1.setEndingDateOfApply( WeekDefinitionTest.DATE_OF_APPLY_2 );
         //weekDefinition1.setIdForm( form.getIdForm( ) );
         WeekDefinitionHome.create( weekDefinition1 );
 
