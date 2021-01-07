@@ -40,6 +40,8 @@ import fr.paris.lutece.plugins.appointment.business.form.Form;
 import fr.paris.lutece.plugins.appointment.business.form.FormHome;
 import fr.paris.lutece.plugins.appointment.business.planning.WeekDefinition;
 import fr.paris.lutece.plugins.appointment.business.planning.WeekDefinitionHome;
+import fr.paris.lutece.plugins.appointment.business.rule.ReservationRule;
+import fr.paris.lutece.plugins.appointment.business.rule.ReservationRuleHome;
 import fr.paris.lutece.test.LuteceTestCase;
 
 /**
@@ -62,7 +64,12 @@ public final class WeekDefinitionTest extends LuteceTestCase
         // Initialize a WeekDefinition
         Form form = FormTest.buildForm1( );
         FormHome.create( form );
-        WeekDefinition weekDefinition = buildWeekDefinition( );
+        
+        ReservationRule reservationRule1 = Commons.buildReservationRule( form.getIdForm( ) );
+        ReservationRuleHome.create( reservationRule1 );
+        
+        WeekDefinition weekDefinition = buildWeekDefinition( reservationRule1.getIdReservationRule() );
+        
         //weekDefinition.setIdForm( form.getIdForm( ) );
         // Insert the WeekDefinition in database
         WeekDefinitionHome.create( weekDefinition );
@@ -87,7 +94,9 @@ public final class WeekDefinitionTest extends LuteceTestCase
         assertNull( weekDefinitionStored );
 
         // Clean
+        ReservationRuleHome.delete( reservationRule1.getIdReservationRule( ) );
         FormHome.delete( form.getIdForm( ) );
+        WeekDefinitionHome.delete( weekDefinition.getIdWeekDefinition( ) );
     }
 
     /**
@@ -98,19 +107,24 @@ public final class WeekDefinitionTest extends LuteceTestCase
         // Initialize a WeekDefinition
         Form form = FormTest.buildForm1( );
         FormHome.create( form );
-        WeekDefinition weekDefinition = buildWeekDefinition( );
+        
+        ReservationRule reservationRule1 = Commons.buildReservationRule( form.getIdForm( ) );
+        ReservationRuleHome.create( reservationRule1 ) ;
+        
+        WeekDefinition weekDefinition = buildWeekDefinition( reservationRule1.getIdReservationRule( ) );
         //weekDefinition.setIdForm( form.getIdForm( ) );
         // Insert the WeekDefinition in database
         WeekDefinitionHome.create( weekDefinition );
         // Find the weekDefinition created in database
         List<WeekDefinition> listWeekDefinitionStored = WeekDefinitionHome.findByIdForm( form.getIdForm( ) );
         // Check Asserts
-        assertEquals( listWeekDefinitionStored.size( ), 1 );
+        assertEquals( 1, listWeekDefinitionStored.size( ) );
         checkAsserts( listWeekDefinitionStored.get( 0 ), weekDefinition );
 
         // Clean
         WeekDefinitionHome.delete( weekDefinition.getIdWeekDefinition( ) );
-        FormHome.delete( form.getIdForm( ) );
+        ReservationRuleHome.delete( reservationRule1.getIdReservationRule( ) );
+        FormHome.delete( form.getIdForm( ) ); 
     }
 
     /**
@@ -121,7 +135,23 @@ public final class WeekDefinitionTest extends LuteceTestCase
     public static WeekDefinition buildWeekDefinition( )
     {
         WeekDefinition weekDefinition = new WeekDefinition( );
+        weekDefinition.setIdWeekDefinition( 0 );
         weekDefinition.setDateOfApply( DATE_OF_APPLY_1 );
+        weekDefinition.setEndingDateOfApply( DATE_OF_APPLY_2 );
+        return weekDefinition;
+    }
+    
+    /**
+     * Build a WeekDefinition Business Object
+     * 
+     * @return the weekDefinition
+     */
+    public static WeekDefinition buildWeekDefinition( int nIdReservationRule )
+    {
+        WeekDefinition weekDefinition = new WeekDefinition( );
+        weekDefinition.setIdReservationRule( nIdReservationRule );
+        weekDefinition.setDateOfApply( DATE_OF_APPLY_1 );
+        weekDefinition.setEndingDateOfApply( DATE_OF_APPLY_2 );
         return weekDefinition;
     }
 

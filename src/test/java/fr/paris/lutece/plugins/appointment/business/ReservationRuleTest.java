@@ -70,6 +70,8 @@ public final class ReservationRuleTest extends LuteceTestCase
         // Initialize a ReservationRule
         ReservationRule reservationRule = buildReservationRule( );
         reservationRule.setIdForm( form.getIdForm( ) );
+        reservationRule.setName( "Reservation Rule Name" );
+        reservationRule.setDescriptionRule( "Reservation Rule Generated" );
         // Create the ReservationRule in database
         ReservationRuleHome.create( reservationRule );
         // Find the ReservationRule created in database
@@ -109,6 +111,8 @@ public final class ReservationRuleTest extends LuteceTestCase
         // Initialize a ReservationRule
         ReservationRule reservationRule = buildReservationRule( );
         reservationRule.setIdForm( form.getIdForm( ) );
+        reservationRule.setName( "Name");
+        reservationRule.setDescriptionRule( "description");
         // Create the ReservationRule in database
         ReservationRuleHome.create( reservationRule );
         // Find the ReservationRule created in database

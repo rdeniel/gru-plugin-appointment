@@ -106,6 +106,7 @@ public class TimeSlotServiceTest extends LuteceTestCase
         appointmentForm.setTimeStart( "09:00" );
         appointmentForm.setTimeEnd( "18:00" );
         appointmentForm.setDurationAppointments( 30 );
+        //appointmentForm.setIsOpenMonday( true );
         int nIdForm = FormService.createAppointmentForm( appointmentForm );
 
         List<WeekDefinition> listWeekDefinition = WeekDefinitionService.findListWeekDefinition( nIdForm );

@@ -38,6 +38,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
+import fr.paris.lutece.plugins.appointment.business.appointment.AppointmentDAO;
+import fr.paris.lutece.plugins.appointment.business.appointment.AppointmentHome;
 import fr.paris.lutece.plugins.appointment.business.calendar.CalendarTemplate;
 import fr.paris.lutece.plugins.appointment.business.calendar.CalendarTemplateHome;
 import fr.paris.lutece.plugins.appointment.business.display.Display;
@@ -47,7 +49,6 @@ import fr.paris.lutece.plugins.appointment.business.localization.Localization;
 import fr.paris.lutece.plugins.appointment.business.localization.LocalizationHome;
 import fr.paris.lutece.plugins.appointment.business.message.FormMessage;
 import fr.paris.lutece.plugins.appointment.business.message.FormMessageHome;
-import fr.paris.lutece.plugins.appointment.business.planning.TimeSlot;
 import fr.paris.lutece.plugins.appointment.business.planning.TimeSlotHome;
 import fr.paris.lutece.plugins.appointment.business.planning.WeekDefinition;
 import fr.paris.lutece.plugins.appointment.business.planning.WeekDefinitionHome;
@@ -60,6 +61,7 @@ import fr.paris.lutece.plugins.appointment.business.rule.ReservationRuleHome;
 import fr.paris.lutece.plugins.appointment.business.slot.Slot;
 import fr.paris.lutece.plugins.appointment.web.dto.AppointmentFormDTO;
 import fr.paris.lutece.portal.service.image.ImageResource;
+import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.test.LuteceTestCase;
 import fr.paris.lutece.util.sql.DAOUtil;
 
@@ -192,6 +194,12 @@ public class FormServiceTest extends LuteceTestCase
         {
             for ( Slot s : SlotService.findListSlot( nIdForm ) )
             {
+            	try ( DAOUtil daoUtil = new DAOUtil( "DELETE FROM appointment_appointment_slot WHERE id_appointment = ?" ) )
+                {
+                    daoUtil.setInt( 1, s.getIdSlot( ) );
+                    daoUtil.executeUpdate( );
+                }
+            	//AppointmentDAO.deleteAppointmentSlot( AppointmentHome.findByIdSlot( s.getIdSlot( ) ), PluginService.getPlugin( AppointmentPlugin.PLUGIN_NAME)  );
                 SlotService.deleteSlot( s );
             }
             Display display = DisplayHome.findByIdForm( nIdForm );
@@ -229,23 +237,23 @@ public class FormServiceTest extends LuteceTestCase
             {
                 FormRuleHome.delete( formRule.getIdFormRule( ) );
             }
+           
             for ( ReservationRule rr : ReservationRuleHome.findByIdForm( nIdForm ) )
-            {
-                ReservationRuleHome.delete( rr.getIdReservationRule( ) );
-            }
+            {    
             for ( WeekDefinition wd : WeekDefinitionHome.findByIdForm( nIdForm ) )
             {
-                for ( WorkingDay wda : WorkingDayHome.findByIdWeekDefinitionRule( wd.getIdWeekDefinition( ) ) )
+                for ( WorkingDay wda : WorkingDayHome.findByIdWeekDefinitionRule( rr.getIdReservationRule( ) ) )
                 {
-                    for ( TimeSlot ts : TimeSlotHome.findByIdWorkingDay( wda.getIdWorkingDay( ) ) )
-                    {
-                        TimeSlotHome.delete( ts.getIdTimeSlot( ) );
-                    }
-                    WorkingDayHome.delete( wda.getIdWorkingDay( ) );
+                    TimeSlotHome.deleteByIdWorkingDay( wda.getIdWorkingDay( ) );
+                    
                 }
-                WeekDefinitionHome.delete( wd.getIdWeekDefinition( ) );
+                
             }
-
+           
+            WeekDefinitionHome.deleteByIdReservationRule( rr.getIdReservationRule( ) );
+            WorkingDayHome.deleteByIdReservationRule( rr.getIdReservationRule( ) );
+            ReservationRuleHome.delete( rr.getIdReservationRule( ) );
+            }
             FormService.removeForm( nIdForm );
         }
     }
@@ -255,7 +263,7 @@ public class FormServiceTest extends LuteceTestCase
     	List<Form> formsByTitle = FormService.findFormsByTitle( strFormsTitle );
     	for(Form form : formsByTitle)
     	{
-    		FormService.removeForm( form.getIdForm() );
+    		cleanForm( form.getIdForm( ) );
     	}
     }
 }

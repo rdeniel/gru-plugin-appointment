@@ -357,6 +357,7 @@ public class AppointmentUtilitiesTest extends LuteceTestCase
 
         AppointmentDTO appointmentDTO3 = AppointmentTest.buildAppointmentDTO( nIdForm, slot3, "jean.dupont@mdp.fr", "Jean", "Dupont", _timeStart, _timeEnd, 2 );
 
+        boolean maxApp = AppointmentUtilities.checkNbMaxAppointmentsOnAGivenPeriod( appointmentDTO3, "jean.dupont@mdp.fr", appointmentForm );
         assertFalse( AppointmentUtilities.checkNbMaxAppointmentsOnAGivenPeriod( appointmentDTO3, "jean.dupont@mdp.fr", appointmentForm ) );
         cleanUp( nIdForm, appointmentForm, appointmentDTO1, appointmentDTO2, appointmentDTO3 );
     }
