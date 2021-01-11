@@ -176,7 +176,6 @@ public class WeekDefinitionServiceTest extends LuteceTestCase
         FormService.updateGlobalParameters( appointmentForm3 );
         openDays.add( appointmentForm3 );
 
-        List<WeekDefinition> listWeekDefinition = WeekDefinitionService.findListWeekDefinition( nIdForm );
         assertEquals( LocalTime.parse( "19:30" ), WeekDefinitionService.getMaxEndingTimeOfAListOfWeekDefinition( openDays ) );
         FormServiceTest.cleanForm( nIdForm );
     }
