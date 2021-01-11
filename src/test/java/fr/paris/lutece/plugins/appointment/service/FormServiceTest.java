@@ -242,7 +242,7 @@ public class FormServiceTest extends LuteceTestCase
             {    
             for ( WeekDefinition wd : WeekDefinitionHome.findByIdForm( nIdForm ) )
             {
-                for ( WorkingDay wda : WorkingDayHome.findByIdWeekDefinitionRule( rr.getIdReservationRule( ) ) )
+                for ( WorkingDay wda : WorkingDayHome.findByIdReservationRule( rr.getIdReservationRule( ) ) )
                 {
                     TimeSlotHome.deleteByIdWorkingDay( wda.getIdWorkingDay( ) );
                     

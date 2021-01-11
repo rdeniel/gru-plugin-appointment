@@ -168,7 +168,7 @@ public final class WorkingDayService
      */
     public static List<WorkingDay> findListWorkingDayByWeekDefinitionRule( int nIdWeekDefinitionRule )
     {
-        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdWeekDefinitionRule( nIdWeekDefinitionRule );
+        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdReservationRule( nIdWeekDefinitionRule );
         for ( WorkingDay workingDay : listWorkingDay )
         {
             workingDay.setListTimeSlot( TimeSlotService.findListTimeSlotByWorkingDay( workingDay.getIdWorkingDay( ) ) );

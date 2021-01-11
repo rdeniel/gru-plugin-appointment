@@ -53,8 +53,11 @@ public class WorkingDayServiceTest extends LuteceTestCase
     /**
      * Get the max ending time of a list of working days
      */
-    public void testGetMaxEndingTimeOfAListOfWorkingDay( )
+    @SuppressWarnings("null")
+	public void testGetMaxEndingTimeOfAListOfWorkingDay( )
     {
+    	List<WorkingDay> listWorkingDay = new ArrayList<>();
+    	
         // Build the form
         AppointmentFormDTO appointmentForm = FormServiceTest.buildAppointmentForm( );
         appointmentForm.setName("appointment_form");
@@ -69,7 +72,10 @@ public class WorkingDayServiceTest extends LuteceTestCase
         FormService.updateGlobalParameters( appointmentForm2 );
 
         List<WeekDefinition> listWeekDefinition = WeekDefinitionService.findListWeekDefinition( nIdForm );
-        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdWeekDefinitionRule( appointmentForm.getIdReservationRule( ) );
+        for(WeekDefinition weekDefinition : listWeekDefinition ) {
+        	listWorkingDay.addAll(WorkingDayHome.findByIdReservationRule( weekDefinition.getIdWeekDefinition( ) ) );
+        }
+        
 
         assertEquals( LocalTime.parse( "20:00" ), WorkingDayService.getMaxEndingTimeOfAListOfWorkingDay( listWorkingDay ) );
         FormServiceTest.cleanForm( nIdForm );
@@ -87,7 +93,7 @@ public class WorkingDayServiceTest extends LuteceTestCase
         int nIdForm = FormService.createAppointmentForm( appointmentForm );
 
         List<WeekDefinition> listWeekDefinition = WeekDefinitionService.findListWeekDefinition( nIdForm );
-        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdWeekDefinitionRule( appointmentForm.getIdReservationRule( ) );
+        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdReservationRule( appointmentForm.getIdReservationRule( ) );
 
         WorkingDay workingDayMonday = listWorkingDay.stream( ).filter( w -> w.getDayOfWeek( ) == DayOfWeek.MONDAY.getValue( ) ).findFirst( ).get( );
 
@@ -114,7 +120,7 @@ public class WorkingDayServiceTest extends LuteceTestCase
         FormService.updateGlobalParameters( appointmentForm2 );
 
         List<WeekDefinition> listWeekDefinition = WeekDefinitionService.findListWeekDefinition( nIdForm );
-        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdWeekDefinitionRule( appointmentForm.getIdReservationRule( ) );
+        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdReservationRule( appointmentForm.getIdReservationRule( ) );
 
         assertEquals( 10, WorkingDayService.getMinDurationTimeSlotOfAListOfWorkingDay( listWorkingDay ) );
         FormServiceTest.cleanForm( nIdForm );
@@ -131,7 +137,7 @@ public class WorkingDayServiceTest extends LuteceTestCase
         appointmentForm.setDurationAppointments( 30 );
         int nIdForm = FormService.createAppointmentForm( appointmentForm );
         List<WeekDefinition> listWeekDefinition = WeekDefinitionService.findListWeekDefinition( nIdForm );
-        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdWeekDefinitionRule( appointmentForm.getIdReservationRule( ) );
+        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdReservationRule( appointmentForm.getIdReservationRule( ) );
 
         WorkingDay workingDayMonday = listWorkingDay.stream( ).filter( w -> w.getDayOfWeek( ) == DayOfWeek.MONDAY.getValue( ) ).findFirst( ).get( );
 
@@ -179,7 +185,7 @@ public class WorkingDayServiceTest extends LuteceTestCase
         appointmentForm.setName("appointment_form");
         int nIdForm = FormService.createAppointmentForm( appointmentForm );
         List<WeekDefinition> listWeekDefinition = WeekDefinitionService.findListWeekDefinition( nIdForm );
-        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdWeekDefinitionRule( appointmentForm.getIdReservationRule( ) );
+        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdReservationRule( appointmentForm.getIdReservationRule( ) );
 
         WorkingDay workingDayMonday = listWorkingDay.stream( ).filter( w -> w.getDayOfWeek( ) == DayOfWeek.MONDAY.getValue( ) ).findFirst( ).get( );
 
