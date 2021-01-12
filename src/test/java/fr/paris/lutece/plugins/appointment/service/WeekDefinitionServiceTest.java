@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.appointment.service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import java.util.List;
 
 import fr.paris.lutece.plugins.appointment.business.planning.WeekDefinition;
 import fr.paris.lutece.plugins.appointment.business.rule.ReservationRule;
+import fr.paris.lutece.plugins.appointment.business.rule.ReservationRuleHome;
 import fr.paris.lutece.plugins.appointment.web.dto.AppointmentFormDTO;
 import fr.paris.lutece.test.LuteceTestCase;
 
@@ -60,8 +62,11 @@ public class WeekDefinitionServiceTest extends LuteceTestCase
         appointmentForm2.setIdForm( nIdForm );
         appointmentForm2.setTimeEnd( "20:00" );
         LocalDate dateOfModification = LocalDate.parse( "2028-06-20" );
+        
         FormService.updateGlobalParameters( appointmentForm2 );
         LocalDate dateOfApply = LocalDate.parse( "2028-06-22" );
+        appointmentForm2.setDateStartValidity( Date.valueOf( dateOfApply ) );
+        FormService.updateForm( appointmentForm2 );
         WeekDefinition foundWeekDefinition = WeekDefinitionService.findWeekDefinitionByIdFormAndClosestToDateOfApply( nIdForm, dateOfApply );
         assertEquals( dateOfModification, foundWeekDefinition.getDateOfApply( ) );
 
@@ -69,40 +74,14 @@ public class WeekDefinitionServiceTest extends LuteceTestCase
         appointmentForm3.setIdForm( nIdForm );
         appointmentForm3.setTimeEnd( "19:00" );
         LocalDate dateOfModification2 = LocalDate.parse( "2028-06-21" );
-        FormService.updateGlobalParameters( appointmentForm2 );
+        FormService.updateGlobalParameters( appointmentForm3 );
+        FormService.updateForm( appointmentForm3 );
 
         foundWeekDefinition = WeekDefinitionService.findWeekDefinitionByIdFormAndClosestToDateOfApply( nIdForm, dateOfApply );
         assertEquals( dateOfModification2, foundWeekDefinition.getDateOfApply( ) );
         FormServiceTest.cleanForm( nIdForm );
     }
 
-    /**
-     * Return, if it exists, the next week definition after a given date
-     */
-    public void testFindNextWeekDefinition( )
-    {
-
-        // Build the form
-        AppointmentFormDTO appointmentForm = FormServiceTest.buildAppointmentForm( );
-        appointmentForm.setTimeEnd( "18:00" );
-        int nIdForm = FormService.createAppointmentForm( appointmentForm );
-
-        AppointmentFormDTO appointmentForm2 = FormServiceTest.buildAppointmentForm( );
-        appointmentForm2.setIdForm( nIdForm );
-        appointmentForm2.setTimeEnd( "20:00" );
-        LocalDate dateOfModification = LocalDate.parse( "2028-06-20" );
-        FormService.updateGlobalParameters( appointmentForm2 );
-        LocalDate givenDate = LocalDate.parse( "2028-06-19" );
-
-        WeekDefinition foundWeekDefinition = WeekDefinitionService.findNextWeekDefinition( nIdForm, givenDate );
-
-        assertEquals( dateOfModification, foundWeekDefinition.getDateOfApply( ) );
-
-        LocalDate givenDate2 = LocalDate.parse( "2028-06-21" );
-        foundWeekDefinition = WeekDefinitionService.findNextWeekDefinition( nIdForm, givenDate2 );
-        assertNull( foundWeekDefinition );
-        FormServiceTest.cleanForm( nIdForm );
-    }
 
     /**
      * Return the min starting time of a list of week definitions
