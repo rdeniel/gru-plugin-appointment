@@ -154,7 +154,6 @@ public class WeekDefinitionServiceTest extends LuteceTestCase
         LocalDate dateOfModification2 = LocalDate.parse( "2028-06-21" );
         FormService.updateForm( appointmentForm3 );
         openDays.add( appointmentForm3 );
-        //openDays = ReservationRuleHome.findByIdForm( nIdForm);
 
         assertEquals( LocalTime.parse( "19:30" ), WeekDefinitionService.getMaxEndingTimeOfAListOfWeekDefinition( openDays ) );
         FormServiceTest.cleanForm( nIdForm );
