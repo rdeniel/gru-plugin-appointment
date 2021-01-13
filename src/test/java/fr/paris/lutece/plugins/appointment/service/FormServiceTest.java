@@ -106,7 +106,7 @@ public class FormServiceTest extends LuteceTestCase
     {
         AppointmentFormDTO appointmentForm = new AppointmentFormDTO( );
 
-        appointmentForm.setName("appointment_form");
+        appointmentForm.setName( "appointment_form" );
         appointmentForm.setTitle( TITLE_FORM );
         appointmentForm.setColor( "gray" );
         appointmentForm.setDescription( "Description Form" );
@@ -141,8 +141,6 @@ public class FormServiceTest extends LuteceTestCase
         appointmentForm.setIsOpenSaturday( Boolean.FALSE );
         appointmentForm.setIsOpenSunday( Boolean.FALSE );
         appointmentForm.setListWorkingDay( WorkingDayService.findListWorkingDayByWeekDefinitionRule( appointmentForm.getIdReservationRule( ) ) );
-
-        // appointmentForm.setCalendarTemplateId(nCalendarTemplateId);
 
         appointmentForm.setEnableCaptcha( Boolean.TRUE );
         appointmentForm.setEnableMandatoryEmail( Boolean.TRUE );

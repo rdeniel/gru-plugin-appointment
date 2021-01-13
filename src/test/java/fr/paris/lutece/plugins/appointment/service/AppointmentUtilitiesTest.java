@@ -38,6 +38,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,6 +55,7 @@ import fr.paris.lutece.plugins.appointment.business.planning.TimeSlot;
 import fr.paris.lutece.plugins.appointment.business.planning.WeekDefinition;
 import fr.paris.lutece.plugins.appointment.business.planning.WorkingDay;
 import fr.paris.lutece.plugins.appointment.business.planning.WorkingDayHome;
+import fr.paris.lutece.plugins.appointment.business.rule.ReservationRuleHome;
 import fr.paris.lutece.plugins.appointment.business.slot.Slot;
 import fr.paris.lutece.plugins.appointment.business.user.User;
 import fr.paris.lutece.plugins.appointment.business.user.UserHome;
@@ -695,19 +697,23 @@ public class AppointmentUtilitiesTest extends LuteceTestCase
         AppointmentFormDTO appointmentForm = FormServiceTest.buildAppointmentForm( );
         appointmentForm.setDateStartValidity( Date.valueOf( _formStart ) );
         appointmentForm.setDateEndValidity( Date.valueOf( _formEnd ) );
+        //appointmentForm.setListWorkingDay( WorkingDayService.findListWorkingDayByWeekDefinitionRule( appointmentForm.getIdReservationRule( ) ) );
         // Build the form
         int nIdForm = FormService.createAppointmentForm( appointmentForm );
         appointmentForm.setIdForm( nIdForm );
-
+        //LocalDate resId = _formStart ;
+        appointmentForm.setIdReservationRule( ReservationRuleHome.findByIdFormAndDateOfApply( nIdForm, _formStart  ).getIdReservationRule() );
+        appointmentForm.setListWorkingDay( WorkingDayService.findListWorkingDayByWeekDefinitionRule( appointmentForm.getIdReservationRule( ) ) );
         List<WeekDefinition> allWeekDefinition = WeekDefinitionService.findListWeekDefinition( nIdForm );
         
         WeekDefinition weekDefinition = allWeekDefinition.get( 0 );
-
+        
+        
         LocalDate nextMonday = _formStart.with( TemporalAdjusters.next( DayOfWeek.MONDAY ) );
         Slot slot1 = SlotTest.buildSlot( nIdForm, nextMonday.atTime( _timeStart ), nextMonday.atTime( _timeEnd ), 3, 3, 0, 3, Boolean.TRUE, Boolean.TRUE );
         slot1 = SlotService.saveSlot( slot1 );
 
-        List<WorkingDay> listWorkingDay = WorkingDayHome.findByIdReservationRule( appointmentForm.getIdReservationRule( ) );
+        List<WorkingDay> listWorkingDay = appointmentForm.getListWorkingDay();
 
         WorkingDay mondayWorkingDay = listWorkingDay.stream( ).filter( w -> w.getDayOfWeek( ) == DayOfWeek.MONDAY.getValue( ) ).findFirst( ).get( );
 
