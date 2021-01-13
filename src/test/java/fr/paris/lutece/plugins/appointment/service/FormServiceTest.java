@@ -108,7 +108,7 @@ public class FormServiceTest extends LuteceTestCase
 
         appointmentForm.setName("appointment_form");
         appointmentForm.setTitle( TITLE_FORM );
-        // appointmentForm.setIdCategory(nIdCategory);
+        appointmentForm.setColor( "gray" );
         appointmentForm.setDescription( "Description Form" );
         appointmentForm.setDescriptionRule( "Description Rule" );
 
@@ -140,6 +140,7 @@ public class FormServiceTest extends LuteceTestCase
         appointmentForm.setIsOpenFriday( Boolean.TRUE );
         appointmentForm.setIsOpenSaturday( Boolean.FALSE );
         appointmentForm.setIsOpenSunday( Boolean.FALSE );
+        appointmentForm.setListWorkingDay( WorkingDayService.findListWorkingDayByWeekDefinitionRule( appointmentForm.getIdReservationRule( ) ) );
 
         // appointmentForm.setCalendarTemplateId(nCalendarTemplateId);
 

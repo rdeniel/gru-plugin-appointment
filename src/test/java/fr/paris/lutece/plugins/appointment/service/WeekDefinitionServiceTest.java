@@ -74,7 +74,7 @@ public class WeekDefinitionServiceTest extends LuteceTestCase
         appointmentForm3.setIdForm( nIdForm );
         appointmentForm3.setTimeEnd( "19:00" );
         LocalDate dateOfModification2 = LocalDate.parse( "2028-06-21" );
-        FormService.updateGlobalParameters( appointmentForm3 );
+        appointmentForm3.setDateOfModification( Date.valueOf( dateOfModification2 ) );
         FormService.updateForm( appointmentForm3 );
 
         foundWeekDefinition = WeekDefinitionService.findWeekDefinitionByIdFormAndClosestToDateOfApply( nIdForm, dateOfApply );
@@ -142,18 +142,19 @@ public class WeekDefinitionServiceTest extends LuteceTestCase
         openDays.add( appointmentForm );
 
         AppointmentFormDTO appointmentForm2 = FormServiceTest.buildAppointmentForm( );
-        appointmentForm2.setIdForm( nIdForm );
         appointmentForm2.setTimeEnd( "19:00" );
+        appointmentForm2.setIdForm( nIdForm );
         LocalDate dateOfModification = LocalDate.parse( "2028-06-20" );
-        FormService.updateGlobalParameters( appointmentForm2 );
+        FormService.updateForm( appointmentForm2 );
         openDays.add( appointmentForm2 );
 
         AppointmentFormDTO appointmentForm3 = FormServiceTest.buildAppointmentForm( );
-        appointmentForm3.setIdForm( nIdForm );
         appointmentForm3.setTimeEnd( "19:30" );
+        appointmentForm3.setIdForm( nIdForm );
         LocalDate dateOfModification2 = LocalDate.parse( "2028-06-21" );
-        FormService.updateGlobalParameters( appointmentForm3 );
+        FormService.updateForm( appointmentForm3 );
         openDays.add( appointmentForm3 );
+        //openDays = ReservationRuleHome.findByIdForm( nIdForm);
 
         assertEquals( LocalTime.parse( "19:30" ), WeekDefinitionService.getMaxEndingTimeOfAListOfWeekDefinition( openDays ) );
         FormServiceTest.cleanForm( nIdForm );
@@ -233,7 +234,7 @@ public class WeekDefinitionServiceTest extends LuteceTestCase
         List<ReservationRule> openDays = new ArrayList<>();
         openDays.add( appointmentForm );
 
-        assertEquals( 5, WeekDefinitionService.getOpenDaysOfWeek( openDays  ) );
+        assertEquals( 5, WeekDefinitionService.getOpenDaysOfWeek( openDays ) );
         FormServiceTest.cleanForm( nIdForm );
     }
 }
