@@ -111,7 +111,7 @@ public class AppointmentUtilitiesTest extends LuteceTestCase
 
         AppointmentDTO appointmentDTO2 = AppointmentTest.buildAppointmentDTO( nIdForm, slot2, "jean.dupont@mdp.fr", "Jean", "Dupont", _timeStart, _timeEnd, 2 );
 
-        assertFalse( AppointmentUtilities.checkNbDaysBetweenTwoAppointments( appointmentDTO2, "Jean", "Dupont", "jean.dupont@mdp.fr", appointmentForm ) );
+        assertFalse( AppointmentUtilities.checkNbDaysBetweenTwoAppointments( appointmentDTO2, "jean.dupont@mdp.fr", appointmentForm ) );
 
         cleanUp( nIdForm, appointmentForm, appointmentDTO1, appointmentDTO2 );
 
@@ -151,7 +151,7 @@ public class AppointmentUtilitiesTest extends LuteceTestCase
 
         AppointmentDTO appointmentDTO2 = AppointmentTest.buildAppointmentDTO( nIdForm, slot2, "jean.dupont@mdp.fr", "Jean", "Dupont", _timeStart, _timeEnd, 2 );
 
-        assertTrue( AppointmentUtilities.checkNbDaysBetweenTwoAppointments( appointmentDTO2, "Jean", "Dupont", "jean.dupont@mdp.fr", appointmentForm ) );
+        assertTrue( AppointmentUtilities.checkNbDaysBetweenTwoAppointments( appointmentDTO2, "jean.dupont@mdp.fr", appointmentForm ) );
         cleanUp( nIdForm, appointmentForm, appointmentDTO1, appointmentDTO2 );
 
     }
@@ -204,7 +204,7 @@ public class AppointmentUtilitiesTest extends LuteceTestCase
 
         AppointmentDTO appointmentDTO3 = AppointmentTest.buildAppointmentDTO( nIdForm, slot3, "jean.dupont@mdp.fr", "Jean", "Dupont", _timeStart, _timeEnd, 2 );
 
-        assertFalse( AppointmentUtilities.checkNbDaysBetweenTwoAppointments( appointmentDTO3, "Jean", "Dupont", "jean.dupont@mdp.fr", appointmentForm ) );
+        assertFalse( AppointmentUtilities.checkNbDaysBetweenTwoAppointments( appointmentDTO3, "jean.dupont@mdp.fr", appointmentForm ) );
         cleanUp( nIdForm, appointmentForm, appointmentDTO1, appointmentDTO2, appointmentDTO3 );
 
     }
@@ -256,7 +256,7 @@ public class AppointmentUtilitiesTest extends LuteceTestCase
 
         AppointmentDTO appointmentDTO3 = AppointmentTest.buildAppointmentDTO( nIdForm, slot3, "jean.dupont@mdp.fr", "Jean", "Dupont", _timeStart, _timeEnd, 2 );
 
-        assertTrue( AppointmentUtilities.checkNbDaysBetweenTwoAppointments( appointmentDTO3, "Jean", "Dupont", "jean.dupont@mdp.fr", appointmentForm ) );
+        assertTrue( AppointmentUtilities.checkNbDaysBetweenTwoAppointments( appointmentDTO3, "jean.dupont@mdp.fr", appointmentForm ) );
         cleanUp( nIdForm, appointmentForm, appointmentDTO1, appointmentDTO2, appointmentDTO3 );
     }
 
@@ -308,7 +308,7 @@ public class AppointmentUtilitiesTest extends LuteceTestCase
 
         AppointmentDTO appointmentDTO3 = AppointmentTest.buildAppointmentDTO( nIdForm, slot3, "jean.dupont@mdp.fr", "Jean", "Dupont", _timeStart, _timeEnd, 2 );
 
-        assertFalse( AppointmentUtilities.checkNbDaysBetweenTwoAppointments( appointmentDTO3, "Jean", "Dupont", "jean.dupont@mdp.fr", appointmentForm ) );
+        assertFalse( AppointmentUtilities.checkNbDaysBetweenTwoAppointments( appointmentDTO3, "jean.dupont@mdp.fr", appointmentForm ) );
         cleanUp( nIdForm, appointmentForm, appointmentDTO1, appointmentDTO2, appointmentDTO3 );
     }
 
