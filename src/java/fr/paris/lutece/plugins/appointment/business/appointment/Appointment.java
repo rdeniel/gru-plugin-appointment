@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -98,11 +98,6 @@ public class Appointment extends User
      * The Admin User who created the appointment (if not created by the user himself)
      */
     private String _strAdminUserCreate;
-
-    /**
-     * User id
-     */
-    private int _nIdUser;
 
     /**
      * The slots on which the appointment is
@@ -247,27 +242,6 @@ public class Appointment extends User
     public void setIdAppointment( int nIdAppointment )
     {
         this._nIdAppointment = nIdAppointment;
-    }
-
-    /**
-     * Get the User Id of the Appointment
-     * 
-     * @return the User Id of the Appointment
-     */
-    public int getIdUser( )
-    {
-        return _nIdUser;
-    }
-
-    /**
-     * Set the User Id of the Appointment
-     * 
-     * @param nIdUser
-     *            the User Id of the Appointment
-     */
-    public void setIdUser( int nIdUser )
-    {
-        this._nIdUser = nIdUser;
     }
 
     /**

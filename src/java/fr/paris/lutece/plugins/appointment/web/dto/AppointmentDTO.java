@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -105,11 +105,6 @@ public final class AppointmentDTO extends Appointment
      * The ending time
      */
     private LocalTime _endingTime;
-
-    /**
-     * Tell if the appointment has been cancelled or not
-     */
-    private boolean _isCancelled;
 
     /**
      * The state of the appointment
@@ -278,27 +273,6 @@ public final class AppointmentDTO extends Appointment
     public void setEndingTime( LocalTime endingTime )
     {
         this._endingTime = endingTime;
-    }
-
-    /**
-     * Tell if the appointment is cancelled
-     * 
-     * @return true if the appointment is cancelled
-     */
-    public boolean getIsCancelled( )
-    {
-        return _isCancelled;
-    }
-
-    /**
-     * Set if the appointment is cancelled
-     * 
-     * @param isCancelled
-     *            the boolean value
-     */
-    public void setIsCancelled( boolean isCancelled )
-    {
-        this._isCancelled = isCancelled;
     }
 
     /**

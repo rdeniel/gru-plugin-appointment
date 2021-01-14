@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,9 +52,6 @@ import fr.paris.lutece.plugins.appointment.business.slot.Period;
 import fr.paris.lutece.plugins.appointment.business.slot.Slot;
 import fr.paris.lutece.plugins.appointment.business.slot.SlotHome;
 import fr.paris.lutece.plugins.appointment.service.listeners.SlotListenerManager;
-import fr.paris.lutece.portal.service.util.AppException;
-import fr.paris.lutece.portal.service.util.AppLogService;
-import fr.paris.lutece.util.sql.TransactionManager;
 
 /**
  * Service class of a slot
@@ -92,6 +89,7 @@ public final class SlotService
         }
         return listSlots;
     }
+
     /**
      * Find slots with appointment of a form on a given period of time
      * 
@@ -144,7 +142,7 @@ public final class SlotService
     public static HashMap<LocalDateTime, Slot> buildMapSlotsByIdFormAndDateRangeWithDateForKey( int nIdForm, LocalDateTime startingDateTime,
             LocalDateTime endingDateTime )
     {
-    	HashMap<LocalDateTime, Slot> mapSlots = new HashMap<>( );
+        HashMap<LocalDateTime, Slot> mapSlots = new HashMap<>( );
         for ( Slot slot : findSlotsByIdFormAndDateRange( nIdForm, startingDateTime, endingDateTime ) )
         {
             mapSlots.put( slot.getStartingDateTime( ), slot );
@@ -163,7 +161,7 @@ public final class SlotService
     {
         return SlotHome.findByIdForm( nIdForm );
     }
-    
+
     /**
      * Fins all the slots of a form
      * 
@@ -208,6 +206,7 @@ public final class SlotService
         }
         return slot;
     }
+
     /**
      * Build all the slot for a period with all the rules (open hours ...) to apply on each day, for each slot
      * 
@@ -224,45 +223,47 @@ public final class SlotService
     public static List<Slot> buildListSlot( int nIdForm, HashMap<LocalDate, WeekDefinition> mapWeekDefinition, LocalDate startingDate, LocalDate endingDate )
     {
         Map<WeekDefinition, ReservationRule> mapReservationRule = ReservationRuleService.findAllReservationRule( nIdForm, mapWeekDefinition.values( ) );
-    	return buildListSlot( nIdForm, mapReservationRule, startingDate, endingDate, 0 );
+        return buildListSlot( nIdForm, mapReservationRule, startingDate, endingDate, 0 );
     }
-	 /**
-	  * Build all the slot for a period with all the rules (open hours ...) to apply on each day, for each slot
-	  * 
-	  * @param nIdForm
-	  *            the form Id
-	  * @param mapReservationRule
-	  *            the map of the rule week definition
-	  * @param startingDate
-	  *            the starting date of the period
-	  * @param endingDate
-	  * @returna list of all the slots built
-	  */
+
+    /**
+     * Build all the slot for a period with all the rules (open hours ...) to apply on each day, for each slot
+     * 
+     * @param nIdForm
+     *            the form Id
+     * @param mapReservationRule
+     *            the map of the rule week definition
+     * @param startingDate
+     *            the starting date of the period
+     * @param endingDate
+     * @returna list of all the slots built
+     */
     public static List<Slot> buildListSlot( int nIdForm, Map<WeekDefinition, ReservationRule> mapReservationRule, LocalDate startingDate, LocalDate endingDate )
     {
-    	return buildListSlot( nIdForm, mapReservationRule, startingDate, endingDate, 0 );
+        return buildListSlot( nIdForm, mapReservationRule, startingDate, endingDate, 0 );
     }
-	 /**
-	  * Build all the slot for a period with all the rules (open hours ...) to apply on each day, for each slot
-	  * 
-	  * @param nIdForm
-	  *            the form Id
-	  * @param mapReservationRule
-	  *            the map of the rule week definition
-	  * @param startingDate
-	  *            the starting date of the period
-	  * @param endingDate
-	  * 			  the ending date of the periode
-	  * @param nNbPlaces
-	  * 			  the number of place to take 
-	  * @returna list of all the slots built
-	  */
+
+    /**
+     * Build all the slot for a period with all the rules (open hours ...) to apply on each day, for each slot
+     * 
+     * @param nIdForm
+     *            the form Id
+     * @param mapReservationRule
+     *            the map of the rule week definition
+     * @param startingDate
+     *            the starting date of the period
+     * @param endingDate
+     *            the ending date of the periode
+     * @param nNbPlaces
+     *            the number of place to take
+     * @returna list of all the slots built
+     */
     public static List<Slot> buildListSlot( int nIdForm, Map<WeekDefinition, ReservationRule> mapReservationRule, LocalDate startingDate, LocalDate endingDate,
             int nNbPlaces )
     {
-    	ForkJoinPool fjp = new ForkJoinPool(); 
-        RecursiveSlotTask task= new RecursiveSlotTask(nIdForm, mapReservationRule, startingDate, endingDate, nNbPlaces);
-        List<Slot> listSlot= fjp.invoke(task);
+        ForkJoinPool fjp = new ForkJoinPool( );
+        RecursiveSlotTask task = new RecursiveSlotTask( nIdForm, mapReservationRule, startingDate, endingDate, nNbPlaces );
+        List<Slot> listSlot = fjp.invoke( task );
         fjp.shutdownNow( );
         return listSlot;
     }
@@ -454,14 +455,13 @@ public final class SlotService
     public static void deleteListSlots( List<Slot> listSlotToDelete )
     {
 
-	   for ( Slot slotToDelete : listSlotToDelete )
-	   {
-	       SlotSafeService.removeSlotInMemory( slotToDelete.getIdSlot() );
-	       SlotHome.delete( slotToDelete.getIdSlot()  );
-	       SlotListenerManager.notifyListenersSlotRemoval( slotToDelete.getIdSlot()  );
-       }
-         
-        
+        for ( Slot slotToDelete : listSlotToDelete )
+        {
+            SlotSafeService.removeSlotInMemory( slotToDelete.getIdSlot( ) );
+            SlotHome.delete( slotToDelete.getIdSlot( ) );
+            SlotListenerManager.notifyListenersSlotRemoval( slotToDelete.getIdSlot( ) );
+        }
+
     }
 
     /**
