@@ -59,7 +59,6 @@ public class ReservationRuleServiceTest extends LuteceTestCase
         appointmentForm2.setIdForm( nIdForm );
         appointmentForm2.setDurationAppointments( 20 );
         LocalDate dateOfModification = LocalDate.parse( "2028-06-20" );
-        appointmentForm2.setIdForm( nIdForm );
         appointmentForm2.setDateStartValidity(Date.valueOf( dateOfModification ) );
         appointmentForm2.setDateEndValidity(Date.valueOf( dateOfModification ) );
         FormService.updateGlobalParameters( appointmentForm2 );
